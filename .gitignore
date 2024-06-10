@@ -22,3 +22,22 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Arquivos gerados pela IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Arquivos gerados pela compilação do Maven
+/target/
+/build/
+/bin/
+
+# Logs
+/logs/
+
+# Arquivos de configuração específicos do ambiente
+/application.properties
+/application.yml
+
