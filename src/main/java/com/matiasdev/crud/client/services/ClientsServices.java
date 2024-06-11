@@ -4,6 +4,7 @@ import com.matiasdev.crud.client.dto.ClientsDto;
 
 import com.matiasdev.crud.client.entities.Client;
 import com.matiasdev.crud.client.repositories.ClientsRepository;
+import com.matiasdev.crud.client.services.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +21,9 @@ public class ClientsServices {
     // get client/id
     @Transactional(readOnly = true)
     public ClientsDto findById(Long id){
-        Client client = repository.findById(id).get();
+        Client client = repository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException("Not found with id" + id));
+
         ClientsDto clientsDto = new ClientsDto(client);
         return clientsDto;
     }
@@ -35,23 +38,22 @@ public class ClientsServices {
     @Transactional
     public ClientsDto post (ClientsDto dto){
         Client entity = new Client();
-        entity.setNome(dto.getNome());
-        entity.setCpf(dto.getCpf());
-        entity.setSalary(dto.getSalary());
-        entity.setBirthDate(dto.getBirthDate());
+        copyDtotoEntity(dto, entity);
+
 
         entity = repository.save(entity);
         return new ClientsDto(entity);
     }
+
+
     // put by id
     @Transactional
     public ClientsDto  update(Long id, ClientsDto dto){
+        if (!repository.existsById(id)){
+            throw new ResourceNotFoundException("Not found with id" + id);
+        }
         Client entity = repository.getReferenceById(id);
-        entity.setNome(dto.getNome());
-        entity.setCpf(dto.getCpf());
-        entity.setSalary(dto.getSalary());
-        entity.setBirthDate(dto.getBirthDate());
-
+        copyDtotoEntity(dto, entity);
         entity = repository.save(entity);
         return new ClientsDto(entity);
     }
@@ -59,8 +61,21 @@ public class ClientsServices {
     //delete by id
     @Transactional
     public  void  deletebyid(Long id ){
-        repository.deleteById(id);
+        Client client = repository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException("Not found with id" + id));
+
+        repository.deleteById(client.getId());
     }
+
+
+    private void copyDtotoEntity(ClientsDto dto, Client entity) {
+        entity.setNome(dto.getNome());
+        entity.setCpf(dto.getCpf());
+        entity.setSalary(dto.getSalary());
+        entity.setBirthDate(dto.getBirthDate());
+    }
+
+
 
 
 
