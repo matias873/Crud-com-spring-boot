@@ -31,6 +31,38 @@ public class ClientsServices {
         Page<ClientsDto> clientsDtosList =  result.map((x-> new ClientsDto(x)));
         return clientsDtosList;
     }
+   // add new client post
+    @Transactional
+    public ClientsDto post (ClientsDto dto){
+        Client entity = new Client();
+        entity.setNome(dto.getNome());
+        entity.setCpf(dto.getCpf());
+        entity.setSalary(dto.getSalary());
+        entity.setBirthDate(dto.getBirthDate());
+
+        entity = repository.save(entity);
+        return new ClientsDto(entity);
+    }
+    // put by id
+    @Transactional
+    public ClientsDto  update(Long id, ClientsDto dto){
+        Client entity = repository.getReferenceById(id);
+        entity.setNome(dto.getNome());
+        entity.setCpf(dto.getCpf());
+        entity.setSalary(dto.getSalary());
+        entity.setBirthDate(dto.getBirthDate());
+
+        entity = repository.save(entity);
+        return new ClientsDto(entity);
+    }
+
+    //delete by id
+    @Transactional
+    public  void  deletebyid(Long id ){
+        repository.deleteById(id);
+    }
+
+
 
 
 
