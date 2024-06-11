@@ -31,7 +31,6 @@ public class ClientController {
 
     }
 
-
     @PostMapping
     public ResponseEntity<ClientsDto> post(@RequestBody ClientsDto dto){
         dto = services.post(dto);
@@ -40,11 +39,13 @@ public class ClientController {
         return ResponseEntity.created(uri).body(dto);
 
     }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<ClientsDto> update(@RequestBody ClientsDto dto, @PathVariable Long id ){
         dto = services.update(id, dto);
         return ResponseEntity.ok(dto);
     }
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ClientsDto> delete (@PathVariable Long id){
         services.deletebyid(id);
