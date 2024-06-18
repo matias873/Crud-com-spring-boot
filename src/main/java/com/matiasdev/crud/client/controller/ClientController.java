@@ -3,12 +3,14 @@ package com.matiasdev.crud.client.controller;
 
 import com.matiasdev.crud.client.dto.ClientsDto;
 import com.matiasdev.crud.client.services.ClientsServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 
 import java.net.URI;
 
@@ -32,7 +34,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientsDto> post(@RequestBody ClientsDto dto){
+    public ResponseEntity<ClientsDto> post(@Valid @RequestBody ClientsDto dto){
         dto = services.post(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id]")
                 .buildAndExpand(dto.getId()).toUri();
