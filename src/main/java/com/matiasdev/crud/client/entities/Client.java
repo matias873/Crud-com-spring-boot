@@ -15,6 +15,8 @@ public class Client {
     private Long id;
     private  String nome ;
     @Column(unique = true)
+    private String email;
+    @Column(unique = true)
     private  String cpf;
     private Double salary;
     private LocalDate birthDate;
@@ -22,9 +24,10 @@ public class Client {
     public Client(){
     }
 
-    public Client(Long id, String nome, String cpf, Double salary, LocalDate birthDate) {
+    public Client(Long id, String nome,String email, String cpf, Double salary, LocalDate birthDate) {
         this.id = id;
         this.nome = nome;
+        this.email = email;
         this.cpf = cpf;
         this.salary = salary;
         this.birthDate = birthDate;
@@ -68,6 +71,14 @@ public class Client {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

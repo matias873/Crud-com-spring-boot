@@ -73,6 +73,7 @@ public class ClientsServices {
         entity.setCpf(dto.getCpf());
         entity.setSalary(dto.getSalary());
         entity.setBirthDate(dto.getBirthDate());
+        entity.setEmail(dto.getEmail());
     }
 
 

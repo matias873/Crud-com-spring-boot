@@ -15,6 +15,10 @@ public class ClientsDto {
     @Size(min = 2, max = 50, message = "O nome deve ter entre 2 e 50 caracteres")
     private  String nome ;
 
+    @NotNull
+    @Email(message = "Email should be valid")
+    private String email;
+
     @NotBlank(message = "O CPF não pode ser vazio")
     @Pattern(regexp = "\\d{11}", message = "O CPF deve ter 11 dígitos")
     private  String cpf;
@@ -41,6 +45,7 @@ public class ClientsDto {
         cpf = entidade.getCpf();
         salary = entidade.getSalary();
         birthDate = entidade.getBirthDate();
+        email = entidade.getEmail();
     }
 
 
@@ -65,4 +70,8 @@ public class ClientsDto {
     public LocalDate getBirthDate() {
         return birthDate;
     }
+    public String getEmail(){
+        return email;
+    }
+
 }
