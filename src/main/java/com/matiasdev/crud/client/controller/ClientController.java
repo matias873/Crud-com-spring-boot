@@ -6,7 +6,10 @@ import com.matiasdev.crud.client.services.ClientsServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,8 +30,17 @@ public class ClientController {
     }
 
     @GetMapping
-    public ResponseEntity< Page<ClientsDto> >findAll (Pageable pegeable){
-        Page<ClientsDto> dtos = services.findAll(pegeable);
+    public ResponseEntity< Page<ClientsDto> >findAll (
+
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sort", defaultValue = "nome") String sortProperty) {
+
+        // Create a Pageable object for pagination and sorting
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortProperty));
+
+        Page<ClientsDto> dtos = services.findAll(pageable);
+
          return ResponseEntity.ok(dtos);
 
     }
@@ -43,7 +55,8 @@ public class ClientController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ClientsDto> update(@RequestBody ClientsDto dto, @PathVariable Long id ){
+    public ResponseEntity<ClientsDto> update(@Valid @RequestBody ClientsDto dto,
+                                                    @PathVariable Long id ){
         dto = services.update(id, dto);
         return ResponseEntity.ok(dto);
     }

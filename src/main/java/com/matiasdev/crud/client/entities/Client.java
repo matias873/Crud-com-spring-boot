@@ -20,17 +20,22 @@ public class Client {
     private  String cpf;
     private Double salary;
     private LocalDate birthDate;
+    private  Boolean ativo;
 
     public Client(){
     }
 
-    public Client(Long id, String nome,String email, String cpf, Double salary, LocalDate birthDate) {
+    public Client(Long id, String nome, String email, String cpf, Double salary, LocalDate birthDate) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.salary = salary;
         this.birthDate = birthDate;
+        this.ativo = Boolean.TRUE;
+    }
+    public void excluir() {
+        this.ativo = false;
     }
 
     public Long getId() {
@@ -79,6 +84,13 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     @Override

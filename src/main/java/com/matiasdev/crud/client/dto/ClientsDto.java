@@ -31,13 +31,16 @@ public class ClientsDto {
     @PastOrPresent(message = "A data de nascimento deve ser no passado")
     private LocalDate birthDate;
 
+    private  Boolean ativo;
 
-    public ClientsDto(Long id, String nome, String cpf, Double salary, LocalDate birthDate) {
+
+    public ClientsDto(Long id, String nome, String cpf, Double salary, LocalDate birthDate ) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.salary = salary;
         this.birthDate = birthDate;
+        this.ativo = getAtivo();
     }
     public ClientsDto (Client entidade){
         id = entidade.getId();
@@ -46,6 +49,7 @@ public class ClientsDto {
         salary = entidade.getSalary();
         birthDate = entidade.getBirthDate();
         email = entidade.getEmail();
+        ativo = entidade.getAtivo();
     }
 
 
@@ -73,5 +77,6 @@ public class ClientsDto {
     public String getEmail(){
         return email;
     }
+    public Boolean getAtivo(){return ativo;}
 
 }

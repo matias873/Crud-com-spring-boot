@@ -30,7 +30,7 @@ public class ClientsServices {
     // get all client /client
     @Transactional(readOnly = true)
     public Page<ClientsDto> findAll(Pageable pegeable){
-        Page<Client> result = repository.findAll(pegeable);
+        Page<Client> result = repository.findAllByAtivoTrue(pegeable);
         Page<ClientsDto> clientsDtosList =  result.map((x-> new ClientsDto(x)));
         return clientsDtosList;
     }
@@ -64,7 +64,7 @@ public class ClientsServices {
         Client client = repository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("Not found with id" + id));
 
-        repository.deleteById(client.getId());
+        client.excluir();
     }
 
 
