@@ -11,7 +11,7 @@ public interface ClientsRepository extends JpaRepository<Client, Long> {
 
     Page<Client> findAllByAtivoTrue(Pageable paginacao);
 
-    Optional<Client> findAllByAtivoTrue();
+    //Optional<Client> findAllByAtivoTrue();
 
 
 
